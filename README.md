@@ -6,7 +6,7 @@
 
 A Backstage homepage ticker widget that shows [GitHub Trending](https://github.com/trending) repositories as a stock-market or news-channel crawl.
 
-![Ticker strip](docs/ticker.svg)
+![Ticker strip](docs/ticker-preview.svg)
 
 ## Features
 
