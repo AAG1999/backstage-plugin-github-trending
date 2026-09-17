@@ -1,0 +1,40 @@
+name: Backstage Compatibility Check
+
+on:
+  schedule:
+    # Run every Monday at 06:00 UTC to catch breaking changes in weekly Backstage releases
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compatibility:
+    name: Check Upstream Backstage Compatibility
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - run: corepack enable
+      - run: yarn install --immutable
+
+      - name: Bump Backstage packages to latest
+        run: yarn backstage-cli versions:bump
+
+      - name: Check TypeScript types
+        run: yarn tsc
+
+      - name: Run unit and integration tests
+        run: yarn test
+
+      - name: Verify build artifacts
+        run: yarn build
+
+      - name: Verify config schema
+        run: yarn backstage-cli config:check --package @aag1999/plugin-github-trending-backend

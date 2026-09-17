@@ -28,7 +28,7 @@ This repository is a monorepo containing the following packages:
 ## Prerequisites
 
 - Backstage application
-- Node.js environment
+- Node.js 22 or 24
 
 ## Installation
 

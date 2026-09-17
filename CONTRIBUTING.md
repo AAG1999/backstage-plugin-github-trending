@@ -27,7 +27,8 @@ To get started with local development:
    ```bash
    yarn tsc
    yarn lint
-   yarn test
+   yarn test --coverage
+   yarn backstage-cli config:check --package @aag1999/plugin-github-trending-backend
    yarn build
    ```
 
@@ -36,6 +37,17 @@ To get started with local development:
    ```bash
    yarn workspace @aag1999/plugin-github-trending start
    ```
+
+## Automated Testing & CI
+
+Pull requests trigger the automated check suite defined in `.github/workflows/ci.yml`:
+- **Node Matrix**: Tested against Node 22 and 24.
+- **TypeScript & Linting**: `yarn tsc` and `yarn lint`.
+- **Unit & Integration Tests**: `yarn test --coverage` (frontend with `@backstage/test-utils`, backend with `@backstage/backend-test-utils`).
+- **Config Schema Check**: Validates `config.schema.json` against Backstage's configuration schema validator.
+- **Changeset Verification**: Ensures pull requests affecting packages include a changeset.
+
+In addition, a scheduled weekly workflow (`.github/workflows/backstage-compatibility.yml`) tests the repository against new Backstage releases to catch upstream breaking changes early.
 
 ## Backend Parser Maintenance
 
@@ -56,6 +68,11 @@ If your pull request contains code changes that should be published, you must in
 2. Follow the prompt to select which packages you are modifying and the type of version bump (patch, minor, major).
 3. Provide a clear description of the change. This text will be included in the changelogs.
 4. Commit the generated markdown file in the `.changeset/` directory along with your PR.
+
+If your pull request contains internal changes that should not trigger a package release (e.g., CI workflows, tests, or documentation), generate an empty changeset with:
+```bash
+yarn changeset --empty
+```
 
 ## Release Process (Maintainers Only)
 

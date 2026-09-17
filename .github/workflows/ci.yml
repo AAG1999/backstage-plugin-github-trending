@@ -13,17 +13,45 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  ci:
+  verify:
+    name: Node ${{ matrix.node-version }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [22, 24]
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: ${{ matrix.node-version }}
           cache: yarn
+
       - run: corepack enable
       - run: yarn install --immutable
       - run: yarn tsc
       - run: yarn lint
-      - run: yarn test
+      - run: yarn test --coverage
       - run: yarn build
+      - name: Verify config schema
+        run: yarn backstage-cli config:check --package @aag1999/plugin-github-trending-backend
+
+  changeset:
+    name: Changeset Verification
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - run: corepack enable
+      - run: yarn install --immutable
+      - name: Verify changeset presence
+        run: yarn changeset status --since=origin/${{ github.base_ref }}
