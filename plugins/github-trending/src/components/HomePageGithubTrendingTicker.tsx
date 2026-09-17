@@ -212,12 +212,41 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.primary.main,
   },
   viewport: {
+    position: 'relative',
     flex: 1,
     overflow: 'hidden',
-    maskImage:
-      'linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent)',
-    WebkitMaskImage:
-      'linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent)',
+    // Gradient overlays with pointer-events: none match Backstage core's pattern
+    // (HorizontalScrollGrid), preserving native subpixel font antialiasing across all items.
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      bottom: 0,
+      width: 16,
+      background: `linear-gradient(to right, ${
+        theme.palette.type === 'dark'
+          ? theme.palette.background.paper
+          : theme.palette.grey[50]
+      }, transparent)`,
+      zIndex: 2,
+      pointerEvents: 'none',
+    },
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      right: 0,
+      top: 0,
+      bottom: 0,
+      width: 16,
+      background: `linear-gradient(to left, ${
+        theme.palette.type === 'dark'
+          ? theme.palette.background.paper
+          : theme.palette.grey[50]
+      }, transparent)`,
+      zIndex: 2,
+      pointerEvents: 'none',
+    },
   },
   // Reduced-motion / no-JS fallback: a single row the user scrolls by hand.
   // Control without motion, and it never wraps into the cards below it.
@@ -236,6 +265,9 @@ const useStyles = makeStyles(theme => ({
     animationTimingFunction: 'linear',
     animationIterationCount: 'infinite',
     willChange: 'transform',
+    transform: 'translate3d(0, 0, 0)',
+    backfaceVisibility: 'hidden',
+    WebkitBackfaceVisibility: 'hidden',
   },
   staticTrack: {
     display: 'flex',
@@ -244,6 +276,7 @@ const useStyles = makeStyles(theme => ({
   },
   paused: {
     animationPlayState: 'paused',
+    willChange: 'auto',
   },
   item: {
     display: 'inline-flex',
@@ -418,8 +451,8 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
   },
   '@keyframes githubTrendingTicker': {
-    '0%': { transform: 'translateX(0)' },
-    '100%': { transform: 'translateX(-50%)' },
+    '0%': { transform: 'translate3d(0, 0, 0)' },
+    '100%': { transform: 'translate3d(-50%, 0, 0)' },
   },
   '@keyframes githubTrendingShimmer': {
     '0%, 100%': { opacity: 0.4 },
