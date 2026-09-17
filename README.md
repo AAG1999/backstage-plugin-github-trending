@@ -8,6 +8,19 @@ A Backstage homepage ticker widget that shows [GitHub Trending](https://github.c
 
 ![Ticker strip](docs/ticker-preview.svg)
 
+> [!TIP]
+> ### 🤖 Install with an AI Agent
+> Using **Cursor**, **Claude Code**, **Copilot**, or **Antigravity**? Paste this prompt directly into your agent:
+>
+> ```text
+> Install and configure the GitHub Trending plugin in this Backstage instance:
+> 1. In packages/backend: install `@aag1999/plugin-github-trending-backend` and register `backend.add(import('@aag1999/plugin-github-trending-backend'))` in `packages/backend/src/index.ts`.
+> 2. In packages/app: install `@aag1999/plugin-github-trending`.
+> 3. Mount `<HomePageGithubTrendingTicker />` on the homepage (e.g. `packages/app/src/components/home/HomePage.tsx`, or as an extension via `@aag1999/plugin-github-trending/alpha` if using the New Frontend System).
+> 4. Integrate it seamlessly into the existing homepage UI/UX: position it as a prominent, full-width banner near the top (e.g., above or below the search bar / header), respecting the existing layout grid and theme.
+> 5. Verify that the app builds and tests pass.
+> ```
+
 ## Features
 
 - **Dynamic Crawl**: Displays trending repositories with smooth, adjustable scrolling.
