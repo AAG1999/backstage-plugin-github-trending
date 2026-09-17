@@ -1,6 +1,6 @@
 {
   "name": "@aag1999/plugin-github-trending",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "GitHub Trending home ticker for Backstage",
   "backstage": {
     "role": "frontend-plugin",
@@ -51,7 +51,7 @@
     "postpack": "backstage-cli package postpack"
   },
   "dependencies": {
-    "@aag1999/plugin-github-trending-common": "^0.1.3",
+    "@aag1999/plugin-github-trending-common": "^0.1.4",
     "@backstage/core-components": "^0.18.14",
     "@backstage/core-plugin-api": "^1.12.10",
     "@backstage/frontend-plugin-api": "^0.18.1",

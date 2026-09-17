@@ -1,5 +1,12 @@
 # @aag1999/plugin-github-trending
 
+## 0.1.4
+
+### Patch Changes
+
+- a081237: Fix blurry repository text in the ticker crawl by replacing CSS mask-image with gradient overlays and stabilizing GPU transform rendering. Fix vertical text overlap between the "GITHUB TRENDING" title and "Today · updated Xm ago" metadata row by assigning explicit line-heights and flex gap.
+  - @aag1999/plugin-github-trending-common@0.1.4
+
 ## 0.1.3
 
 ### Patch Changes
