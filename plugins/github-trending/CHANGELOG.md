@@ -1,5 +1,13 @@
 # @aag1999/plugin-github-trending
 
+## 0.1.3
+
+### Patch Changes
+
+- c31780f: Upgrade Backstage dependencies to release 1.55.0.
+- Updated dependencies [c31780f]
+  - @aag1999/plugin-github-trending-common@0.1.3
+
 ## 0.1.2
 
 ### Patch Changes
