@@ -36,7 +36,7 @@ jobs:
         with:
           title: Version Packages
           commit: Version packages
-          version: yarn changeset version && yarn install
+          version: yarn version-packages
           publish: yarn release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
