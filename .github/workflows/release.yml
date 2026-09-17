@@ -19,6 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -34,6 +36,7 @@ jobs:
         with:
           title: Version Packages
           commit: Version packages
+          version: yarn changeset version && yarn install
           publish: yarn release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -41,7 +44,8 @@ jobs:
       - name: Create root version tag
         if: steps.changesets.outputs.published == 'true'
         run: |
-          VERSION=$(node -p "require('./package.json').version")
+          VERSION=$(node -p "require('./plugins/github-trending/package.json').version")
+          git fetch --tags
           if ! git rev-parse "v$VERSION" >/dev/null 2>&1; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
