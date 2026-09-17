@@ -1,0 +1,31 @@
+{
+  "name": "backstage-plugin-github-trending",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Backstage plugin workspace: GitHub Trending home ticker",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": "22 || 24"
+  },
+  "packageManager": "yarn@4.13.0",
+  "workspaces": {
+    "packages": [
+      "plugins/*"
+    ]
+  },
+  "scripts": {
+    "build": "backstage-cli repo build --all",
+    "lint": "backstage-cli repo lint",
+    "test": "backstage-cli repo test --watchAll=false",
+    "tsc": "tsc",
+    "clean": "backstage-cli repo clean"
+  },
+  "devDependencies": {
+    "@backstage/cli": "^0.36.5",
+    "@backstage/cli-defaults": "^0.1.5",
+    "@types/jest": "^30.0.0",
+    "jest": "^30.0.0",
+    "typescript": "~5.8.0"
+  },
+  "prettier": "@backstage/cli/config/prettier"
+}

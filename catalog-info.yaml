@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: backstage-plugin-github-trending
+  title: GitHub Trending
+  description: Home-page news ticker of github.com/trending for Backstage.
+  annotations:
+    github.com/project-slug: AAG1999/backstage-plugin-github-trending
+spec:
+  type: backstage-plugin
+  lifecycle: experimental
+  owner: guests

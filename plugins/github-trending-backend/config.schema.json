@@ -1,0 +1,34 @@
+{
+  "$schema": "https://backstage.io/schema/config-v1",
+  "type": "object",
+  "properties": {
+    "githubTrending": {
+      "type": "object",
+      "description": "GitHub Trending ticker backend",
+      "additionalProperties": false,
+      "properties": {
+        "baseUrl": {
+          "type": "string",
+          "description": "GitHub website origin that hosts /trending. Default https://github.com. GHES has no Trending page."
+        },
+        "since": {
+          "type": "string",
+          "description": "Default window: daily, weekly, or monthly",
+          "enum": ["daily", "weekly", "monthly"]
+        },
+        "language": {
+          "type": "string",
+          "description": "Optional programming-language slug, e.g. typescript"
+        },
+        "spokenLanguageCode": {
+          "type": "string",
+          "description": "Optional spoken-language code from github.com/trending, e.g. en"
+        },
+        "cacheTtlMinutes": {
+          "type": "number",
+          "description": "In-memory cache TTL in minutes. Default 45."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="72" viewBox="0 0 960 72" role="img" aria-label="GitHub Trending ticker mock">
+  <rect width="960" height="72" fill="#1b1b1d"/>
+  <text x="16" y="44" fill="#9aa0a6" font-family="sans-serif" font-size="12" font-weight="700">GITHUB TRENDING</text>
+  <text x="160" y="44" fill="#e8eaed" font-family="sans-serif" font-size="14">#1 alibaba/open-code-review</text>
+  <text x="430" y="44" fill="#9aa0a6" font-family="sans-serif" font-size="12">Go</text>
+  <text x="470" y="44" fill="#81c995" font-family="sans-serif" font-size="14" font-weight="700">+3,290</text>
+  <text x="550" y="44" fill="#9aa0a6" font-family="sans-serif" font-size="12">34,422</text>
+  <text x="650" y="44" fill="#e8eaed" font-family="sans-serif" font-size="14">#2 cloudflare/security-audit-skill</text>
+</svg>
