@@ -23,8 +23,8 @@
     "release": "yarn tsc && yarn build && yarn changeset publish"
   },
   "devDependencies": {
-    "@backstage/cli": "^0.36.5",
-    "@backstage/cli-defaults": "^0.1.5",
+    "@backstage/cli": "^0.36.6",
+    "@backstage/cli-defaults": "^0.1.6",
     "@changesets/cli": "^2.31.1",
     "@types/jest": "^30.0.0",
     "jest": "^30.0.0",

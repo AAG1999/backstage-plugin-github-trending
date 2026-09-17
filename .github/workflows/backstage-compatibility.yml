@@ -26,6 +26,8 @@ jobs:
 
       - name: Bump Backstage packages to latest
         run: yarn backstage-cli versions:bump
+        env:
+          YARN_ENABLE_IMMUTABLE_INSTALLS: 'false'
 
       - name: Check TypeScript types
         run: yarn tsc
