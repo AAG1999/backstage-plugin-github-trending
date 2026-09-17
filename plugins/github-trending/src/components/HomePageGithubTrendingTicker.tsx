@@ -151,15 +151,20 @@ const useStyles = makeStyles(theme => ({
   labelText: {
     display: 'flex',
     flexDirection: 'column',
-    lineHeight: 1.1,
+    justifyContent: 'center',
+    gap: 2,
+    lineHeight: 1.3,
   },
   labelTitle: {
     fontWeight: 800,
     letterSpacing: 0.5,
     textTransform: 'uppercase',
     fontSize: 11,
+    lineHeight: '14px',
     color: theme.palette.text.primary,
     whiteSpace: 'nowrap',
+    display: 'inline-flex',
+    alignItems: 'center',
   },
   // The feed title doubles as the "see the full list" source link. Kept visually
   // near-identical at rest so the strip does not read as a row of links; the
@@ -169,6 +174,7 @@ const useStyles = makeStyles(theme => ({
     letterSpacing: 0.5,
     textTransform: 'uppercase',
     fontSize: 11,
+    lineHeight: '14px',
     color: theme.palette.text.primary,
     whiteSpace: 'nowrap',
     display: 'inline-flex',
@@ -195,6 +201,7 @@ const useStyles = makeStyles(theme => ({
   },
   labelMeta: {
     fontSize: 10,
+    lineHeight: '13px',
     color: theme.palette.text.secondary,
     display: 'flex',
     alignItems: 'center',
