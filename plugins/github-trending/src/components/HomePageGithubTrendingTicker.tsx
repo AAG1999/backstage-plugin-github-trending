@@ -8,7 +8,8 @@
  *     http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import React, {
+import {
+  Fragment,
   useEffect,
   useLayoutEffect,
   useMemo,
@@ -835,51 +836,59 @@ export const HomePageGithubTrendingTicker = (
     setSpotIndex(i => (i - 1 + items.length) % items.length);
   const gotoNext = () => setSpotIndex(i => (i + 1) % items.length);
 
+  let crawl;
+  if (items.length === 0) {
+    crawl = (
+      <Typography className={classes.empty}>
+        No trending repositories right now.
+      </Typography>
+    );
+  } else if (reduceMotion) {
+    crawl = (
+      <div className={classes.staticViewport}>
+        <div className={classes.staticTrack}>
+          {items.map((repo, index) => (
+            <Fragment key={`${repo.owner}/${repo.name}`}>
+              {index > 0 ? (
+                <span className={classes.sep} aria-hidden="true" />
+              ) : null}
+              <TickerItem repo={repo} classes={classes} />
+            </Fragment>
+          ))}
+        </div>
+      </div>
+    );
+  } else {
+    crawl = (
+      <div
+        className={classes.viewport}
+        onMouseEnter={() => setHoverPaused(true)}
+        onMouseLeave={() => setHoverPaused(false)}
+      >
+        <div
+          ref={trackRef}
+          className={`${classes.track} ${paused ? classes.paused : ''}`}
+          style={{ animationDuration: `${durationSec}s` }}
+          data-testid="github-trending-track"
+        >
+          {loop.map((repo, index) => (
+            <Fragment key={`${repo.owner}/${repo.name}-${index}`}>
+              {index > 0 ? (
+                <span className={classes.sep} aria-hidden="true" />
+              ) : null}
+              <TickerItem repo={repo} classes={classes} />
+            </Fragment>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={classes.root}>
       <div className={classes.topRow}>
         {header}
-        {items.length === 0 ? (
-          <Typography className={classes.empty}>
-            No trending repositories right now.
-          </Typography>
-        ) : reduceMotion ? (
-          // Static, hand-scrollable single row: control without motion.
-          <div className={classes.staticViewport}>
-            <div className={classes.staticTrack}>
-              {items.map((repo, index) => (
-                <React.Fragment key={`${repo.owner}/${repo.name}`}>
-                  {index > 0 ? (
-                    <span className={classes.sep} aria-hidden="true" />
-                  ) : null}
-                  <TickerItem repo={repo} classes={classes} />
-                </React.Fragment>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div
-            className={classes.viewport}
-            onMouseEnter={() => setHoverPaused(true)}
-            onMouseLeave={() => setHoverPaused(false)}
-          >
-            <div
-              ref={trackRef}
-              className={`${classes.track} ${paused ? classes.paused : ''}`}
-              style={{ animationDuration: `${durationSec}s` }}
-              data-testid="github-trending-track"
-            >
-              {loop.map((repo, index) => (
-                <React.Fragment key={`${repo.owner}/${repo.name}-${index}`}>
-                  {index > 0 ? (
-                    <span className={classes.sep} aria-hidden="true" />
-                  ) : null}
-                  <TickerItem repo={repo} classes={classes} />
-                </React.Fragment>
-              ))}
-            </div>
-          </div>
-        )}
+        {crawl}
       </div>
       {showSpotlight && spotlightRepo ? (
         <Spotlight

@@ -1,5 +1,7 @@
 # GitHub Trending for Backstage
 
+[![CI](https://github.com/AAG1999/backstage-plugin-github-trending/actions/workflows/ci.yml/badge.svg)](https://github.com/AAG1999/backstage-plugin-github-trending/actions/workflows/ci.yml)
+
 Apache-2.0 homepage ticker that shows [GitHub Trending](https://github.com/trending) as a stock-market / news-channel crawl.
 
 ![Ticker strip](docs/ticker.svg)
@@ -112,14 +114,16 @@ After the packages are on the public npm registry, add [`docs/plugin-directory.y
 
 ## Development
 
-This tree is a Yarn workspace of a Backstage app (`community-plugin-github-trending/plugins/*`). From the Backstage root:
+This repo is a Yarn workspace (`plugins/*`).
 
 ```bash
 yarn install
-yarn workspace @aag1999/plugin-github-trending-backend test --watchAll=false
-yarn workspace @aag1999/plugin-github-trending test --watchAll=false
+yarn tsc
+yarn lint
+yarn test
+yarn build
 ```
 
 Standalone UI: `yarn workspace @aag1999/plugin-github-trending start`
 
-To extract this folder as its own GitHub repository, add `"workspaces": ["plugins/*"]` to this `package.json` and run `yarn install` here.
+Publishing: see [docs/PUBLISH.md](docs/PUBLISH.md).

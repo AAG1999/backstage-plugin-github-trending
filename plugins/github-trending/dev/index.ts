@@ -1,4 +1,4 @@
-import React from 'react';
+import { createElement } from 'react';
 import { createDevApp } from '@backstage/dev-utils';
 import { githubTrendingPlugin } from '../src/plugin';
 import { HomePageGithubTrendingTicker } from '../src/components/HomePageGithubTrendingTicker';
@@ -45,7 +45,7 @@ createDevApp()
     }),
   })
   .addPage({
-    element: React.createElement(HomePageGithubTrendingTicker),
+    element: createElement(HomePageGithubTrendingTicker),
     title: 'GitHub Trending',
     path: '/github-trending',
   })

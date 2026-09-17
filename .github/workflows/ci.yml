@@ -5,14 +5,25 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  test:
+  ci:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: yarn
       - run: corepack enable
       - run: yarn install --immutable
+      - run: yarn tsc
+      - run: yarn lint
       - run: yarn test
+      - run: yarn build

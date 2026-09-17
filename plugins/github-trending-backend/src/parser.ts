@@ -51,10 +51,13 @@ export function parseTrendingHtml(
 ): TrendingRepository[] {
   const origin = siteOrigin.replace(/\/$/, '');
   const rows: TrendingRepository[] = [];
-  let match: RegExpExecArray | null;
   const articleRe = new RegExp(ARTICLE_RE.source, ARTICLE_RE.flags);
   let rank = 0;
-  while ((match = articleRe.exec(html))) {
+  for (;;) {
+    const match = articleRe.exec(html);
+    if (!match) {
+      break;
+    }
     const body = match[1];
     const href = body.match(HREF_RE);
     if (!href) {
