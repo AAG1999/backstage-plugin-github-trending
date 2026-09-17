@@ -9,7 +9,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@aag1999/plugin-github-trending-backend@workspace:plugins/github-trending-backend"
   dependencies:
-    "@aag1999/plugin-github-trending-common": "workspace:^"
+    "@aag1999/plugin-github-trending-common": "npm:^0.1.2"
     "@backstage/backend-plugin-api": "npm:^1.10.0"
     "@backstage/backend-test-utils": "npm:^1.11.6"
     "@backstage/cli": "npm:^0.36.5"
@@ -24,7 +24,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@aag1999/plugin-github-trending-common@workspace:^, @aag1999/plugin-github-trending-common@workspace:plugins/github-trending-common":
+"@aag1999/plugin-github-trending-common@npm:^0.1.2, @aag1999/plugin-github-trending-common@workspace:plugins/github-trending-common":
   version: 0.0.0-use.local
   resolution: "@aag1999/plugin-github-trending-common@workspace:plugins/github-trending-common"
   dependencies:
@@ -36,7 +36,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@aag1999/plugin-github-trending@workspace:plugins/github-trending"
   dependencies:
-    "@aag1999/plugin-github-trending-common": "workspace:^"
+    "@aag1999/plugin-github-trending-common": "npm:^0.1.2"
     "@backstage/cli": "npm:^0.36.5"
     "@backstage/core-components": "npm:^0.18.13"
     "@backstage/core-plugin-api": "npm:^1.12.9"
