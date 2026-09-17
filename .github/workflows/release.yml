@@ -29,6 +29,7 @@ jobs:
       - run: corepack enable
       - run: yarn install --immutable
       - name: Version packages or publish to npm
+        id: changesets
         uses: changesets/action@v1
         with:
           title: Version Packages
@@ -37,3 +38,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN || '' }}
+      - name: Create root version tag
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if ! git rev-parse "v$VERSION" >/dev/null 2>&1; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git tag -a "v$VERSION" -m "Release v$VERSION"
+            git push origin "v$VERSION"
+          fi
