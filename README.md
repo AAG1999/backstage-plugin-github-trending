@@ -1,72 +1,67 @@
-# GitHub Trending for Backstage
+# Backstage Plugin GitHub Trending
 
+[![NPM Version](https://img.shields.io/npm/v/@aag1999/plugin-github-trending.svg)](https://www.npmjs.com/package/@aag1999/plugin-github-trending)
+[![License](https://img.shields.io/npm/l/@aag1999/plugin-github-trending.svg)](https://github.com/AAG1999/backstage-plugin-github-trending/blob/main/LICENSE)
 [![CI](https://github.com/AAG1999/backstage-plugin-github-trending/actions/workflows/ci.yml/badge.svg)](https://github.com/AAG1999/backstage-plugin-github-trending/actions/workflows/ci.yml)
 
-Apache-2.0 homepage ticker that shows [GitHub Trending](https://github.com/trending) as a stock-market / news-channel crawl.
+A Backstage homepage ticker widget that shows [GitHub Trending](https://github.com/trending) repositories as a stock-market or news-channel crawl.
 
 ![Ticker strip](docs/ticker.svg)
 
-There is no official GitHub Trending API. The **backend** fetches the public HTML page once, parses it, and caches the result (default 45 minutes) so browsers never scrape GitHub. See GitHub’s [Acceptable Use Policies](https://docs.github.com/en/site-policy/acceptable-use-policies/github-acceptable-use-policies).
+## Features
+
+- **Dynamic Crawl**: Displays trending repositories with smooth, adjustable scrolling.
+- **Customizable Filtering**: Filter trends by spoken language, programming language, and time period (daily, weekly, monthly).
+- **Backend Caching**: Includes a companion backend plugin that safely scrapes and caches GitHub Trending data (default 45 minutes) to respect GitHub's [Acceptable Use Policies](https://docs.github.com/en/site-policy/acceptable-use-policies/github-acceptable-use-policies) and avoid rate-limiting.
+- **Accessible**: Supports screen readers with a static list fallback. The animation pauses on hover or through a visible Pause control (WCAG 2.2.2), and respects `prefers-reduced-motion`.
 
 ## Packages
 
+This repository is a monorepo containing the following packages:
+
 | Package | Role |
 | --- | --- |
-| `@aag1999/plugin-github-trending` | Frontend ticker widget |
-| `@aag1999/plugin-github-trending-backend` | Cached fetch + JSON API |
-| `@aag1999/plugin-github-trending-common` | Shared types |
+| `@aag1999/plugin-github-trending` | Frontend ticker widget component |
+| `@aag1999/plugin-github-trending-backend` | Backend cached fetch and JSON API |
+| `@aag1999/plugin-github-trending-common` | Shared types across frontend and backend |
 
-## Install
+## Prerequisites
+
+- Backstage application
+- Node.js environment
+
+## Installation
+
+### 1. Backend Setup
+
+First, install the backend package into your Backstage backend workspace.
 
 ```bash
-yarn workspace app add @aag1999/plugin-github-trending
 yarn workspace backend add @aag1999/plugin-github-trending-backend
 ```
 
-### Backend (new backend system)
+**New Backend System**
+Register the plugin in your backend's `index.ts`:
 
 ```ts
 // packages/backend/src/index.ts
 backend.add(import('@aag1999/plugin-github-trending-backend'));
 ```
 
-### Frontend — customizable home grid
+### 2. Frontend Setup
 
-Register the plugin so its API factory is discovered, then mount the widget as a child of `CustomHomepageGrid`. Users hide it with **Home → Edit → remove widget** (layout is persisted).
+Next, install the frontend package into your Backstage app workspace.
 
-```tsx
-import { githubTrendingPlugin, HomePageGithubTrendingTicker } from '@aag1999/plugin-github-trending';
-
-createApp({
-  plugins: [githubTrendingPlugin],
-  // ...
-});
-
-<CustomHomepageGrid>
-  <HomePageGithubTrendingTicker />
-  {/* other widgets */}
-</CustomHomepageGrid>
+```bash
+yarn workspace app add @aag1999/plugin-github-trending
 ```
 
-All widget props are optional:
+**New Frontend System**
 
-| Prop | Default | Purpose |
-| --- | --- | --- |
-| `since` | backend config | `daily` \| `weekly` \| `monthly` |
-| `language` | all | Programming language filter, e.g. `typescript` |
-| `spokenLanguageCode` | all | Spoken language filter, e.g. `en` |
-| `maxItems` | all returned | Cap the number of repositories shown |
-| `pixelsPerSecond` | `50` | Scroll speed; readable range ~30–80, >100 is unreadable |
-| `refreshIntervalMinutes` | `15` | Re-fetch cadence; `0` disables polling |
-| `showSpotlight` | `true` | Static rotating feature row (with description) under the crawl |
-
-```tsx
-<HomePageGithubTrendingTicker since="weekly" language="go" maxItems={15} />
-```
-
-### Frontend — new frontend system
+Register the plugin feature in your `App.tsx` or `index.ts`:
 
 ```ts
+// packages/app/src/App.tsx
 import githubTrendingPlugin from '@aag1999/plugin-github-trending/alpha';
 
 createApp({
@@ -74,10 +69,7 @@ createApp({
 });
 ```
 
-Place it in `app.extensions` `page:home` `defaultConfig` as `HomePageGithubTrendingTicker` (full width, 2 rows).
-
-The same knobs as the props above are available declaratively, so adopters
-never need to fork the component:
+Then, you can place it in your `app-config.yaml` as an extension:
 
 ```yaml
 app:
@@ -92,38 +84,62 @@ app:
           showSpotlight: true
 ```
 
-## Config
+**Old Frontend System**
+
+Register the plugin and mount the widget as a child of your `CustomHomepageGrid`.
+
+```tsx
+// packages/app/src/App.tsx
+import { githubTrendingPlugin, HomePageGithubTrendingTicker } from '@aag1999/plugin-github-trending';
+
+createApp({
+  plugins: [githubTrendingPlugin],
+  // ...
+});
+
+// Inside your custom homepage layout:
+<CustomHomepageGrid>
+  <HomePageGithubTrendingTicker />
+  {/* other widgets */}
+</CustomHomepageGrid>
+```
+
+You can customize the widget by passing props:
+
+```tsx
+<HomePageGithubTrendingTicker since="weekly" language="go" maxItems={15} />
+```
+
+## Configuration
+
+Both frontend props (for the old frontend system) and YAML configurations (for the new frontend system) support the same properties. Below are the available properties:
+
+| Property | Default | Purpose |
+| --- | --- | --- |
+| `since` | From backend config | `daily` \| `weekly` \| `monthly` |
+| `language` | All | Programming language filter, e.g. `typescript` |
+| `spokenLanguageCode` | All | Spoken language filter, e.g. `en` |
+| `maxItems` | All returned | Cap the number of repositories shown |
+| `pixelsPerSecond` | `50` | Scroll speed; readable range ~30–80, >100 is unreadable |
+| `refreshIntervalMinutes` | `15` | Re-fetch cadence; `0` disables polling |
+| `showSpotlight` | `true` | Static rotating feature row (with description) under the crawl |
+
+You must also configure the backend in your `app-config.yaml`:
 
 ```yaml
 githubTrending:
   # Public github.com — GHES has no /trending page
   baseUrl: https://github.com
-  since: daily          # daily | weekly | monthly
+  since: daily          # default fallback for since (daily | weekly | monthly)
   # language: typescript
   # spokenLanguageCode: en
   cacheTtlMinutes: 45
 ```
 
-## Accessibility
+## Contributing
 
-The crawl pauses with a visible **Pause** control (WCAG 2.2.2). Hover also pauses. `prefers-reduced-motion` starts paused. Screen readers get a static list; the animation is visual only.
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on local development, building the project, and submitting changes.
 
-## Directory listing
+## Directory Listing
 
-After the packages are on the public npm registry, add [`docs/plugin-directory.yaml`](docs/plugin-directory.yaml) to [`backstage/backstage` `microsite/data/plugins`](https://backstage.io/docs/plugins/add-to-directory/).
-
-## Development
-
-This repo is a Yarn workspace (`plugins/*`).
-
-```bash
-yarn install
-yarn tsc
-yarn lint
-yarn test
-yarn build
-```
-
-Standalone UI: `yarn workspace @aag1999/plugin-github-trending start`
-
-Publishing: see [docs/PUBLISH.md](docs/PUBLISH.md).
+If you are a Backstage maintainer and the packages are on the public npm registry, add [`docs/plugin-directory.yaml`](docs/plugin-directory.yaml) to the official Backstage [microsite plugin directory](https://backstage.io/docs/plugins/add-to-directory/).
