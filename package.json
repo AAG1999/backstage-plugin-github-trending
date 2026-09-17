@@ -1,6 +1,6 @@
 {
   "name": "backstage-plugin-github-trending",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Backstage plugin workspace: GitHub Trending home ticker",
   "license": "Apache-2.0",

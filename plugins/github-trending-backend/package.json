@@ -1,6 +1,6 @@
 {
   "name": "@aag1999/plugin-github-trending-backend",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Backend for the GitHub Trending Backstage plugin",
   "backstage": {
     "role": "backend-plugin",
