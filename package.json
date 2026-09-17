@@ -20,7 +20,7 @@
     "tsc": "tsc",
     "clean": "backstage-cli repo clean",
     "changeset": "changeset",
-    "version-packages": "changeset version && yarn install",
+    "version-packages": "changeset version && yarn install --no-immutable",
     "release": "yarn tsc && yarn build && yarn changeset publish"
   },
   "devDependencies": {
