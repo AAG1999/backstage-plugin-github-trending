@@ -1,5 +1,7 @@
 # @aag1999/plugin-github-trending-common
 
+## 0.1.4
+
 ## 0.1.3
 
 ### Patch Changes
